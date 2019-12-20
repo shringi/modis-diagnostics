@@ -1,12 +1,14 @@
-// import data
-// https://stackoverflow.com/questions/53280885/calculating-ndvi-per-region-month-year-with-google-earth-engine
+/**** Start of imports. If edited, may not auto-convert in the playground. ****/
+var wdpa = ee.FeatureCollection("WCMC/WDPA/current/polygons"),
+    modisTVI250 = ee.ImageCollection("MODIS/006/MOD13Q1");
+/***** End of imports. If edited, may not auto-convert in the playground. *****/
+// Importing Protected Area Boundary shape files
 var pas = wdpa
-          .filterMetadata('SUB_LOC', 'equals', 'IN-KA')
-          .filterBounds(studyArea);
+          .filterMetadata('SUB_LOC', 'equals', 'IN-KA');
 Map.addLayer(pas, {}, 'Selected Protected Areas');
 Map.centerObject(pas);
 // Count number of number of PAs
-print('Number of total protected areas: ', pas.toList(100).length());
+print('Number of total protected areas: ', pas.toList(1000).length());
 
 var startDate = ee.Date('2000-01-01'); // set analysis start time
 var endDate = ee.Date('2018-12-31'); // set analysis end time
