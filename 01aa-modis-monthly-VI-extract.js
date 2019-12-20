@@ -24,7 +24,7 @@ print('Number of images: ', composite.toList(100000).length());
 var scale_modis = 250;
 
 // Function to extract mean summary vegetation Indices
-var stats_PA = function(image) {
+var f_stats_by_PA = function(image) {
   return pas.map(function(feature) {
     var mean = image.reduceRegion({
     reducer: ee.Reducer.mean(),
@@ -83,7 +83,7 @@ var stats_PA = function(image) {
   });
 };
 // 
-var results = composite.map(stats_PA).flatten();
+var results = composite.map(f_stats_by_PA).flatten();
 Export.table.toDrive({
   collection:results,
   description:"01aa-Modis-monthly-VI-extract",
