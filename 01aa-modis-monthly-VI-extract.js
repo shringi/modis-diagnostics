@@ -21,7 +21,7 @@ var composite = modisTVI250
 print('Number of images: ', composite.toList(100000).length());
 
 var scale_modis = 250;
-var statsNDVI = function(image) {
+var stats_PA = function(image) {
   return pas.map(function(feature) {
     var mean = image.reduceRegion({
     reducer: ee.Reducer.mean(),
@@ -62,7 +62,7 @@ var statsNDVI = function(image) {
       PA_Desig: feature.get('DESIG'),
       PA_Desig_Type: feature.get('DESIG_TYPE'),
       PA_GIS_AREA: feature.get('GIS_AREA'),
-      PA_IUCN_CAT: feature.get('IUCN_CAT'),
+      PA_IUCN_: feature.get('IUCN_CAT'),
       
       date: image.get("system:index"),
       // NDVI stats
@@ -82,6 +82,8 @@ var statsNDVI = function(image) {
 var results = composite.map(statsNDVI).flatten();
 Export.table.toDrive({
   collection:results,
-  description:"Export-Script",
+  description:"01aa-Modis-monthly-VI-extract",
+  folder: "GEE",
+  fileNamePrefix: "01aa",
   fileFormat:"CSV"
 });
