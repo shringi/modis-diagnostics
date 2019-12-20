@@ -20,7 +20,10 @@ var composite = modisTVI250
 // List number of images used to create mosaic;
 print('Number of images: ', composite.toList(100000).length());
 
+// Modis Scale in meters
 var scale_modis = 250;
+
+// Function to extract mean summary vegetation Indices
 var stats_PA = function(image) {
   return pas.map(function(feature) {
     var mean = image.reduceRegion({
@@ -79,7 +82,8 @@ var stats_PA = function(image) {
       stdDev_EVI:  stdDev.get('EVI')});
   });
 };
-var results = composite.map(statsNDVI).flatten();
+// 
+var results = composite.map(stats_PA).flatten();
 Export.table.toDrive({
   collection:results,
   description:"01aa-Modis-monthly-VI-extract",
